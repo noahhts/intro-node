@@ -7,9 +7,68 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <div class="mx-auto max-w-xl">
-      <h1 class="my-5 text-4xl">My Notes</h1>
-      <div class="">{{ notes }}</div>
-    </div>
+    <main class="mx-auto max-w-xl">
+      <header class="flex justify-between">
+        <h1 class="my-5 text-5xl">My Notes</h1>
+        <div class="tags flex gap-1 items-center"></div>
+        <!-- insert here: current tags selected, with an x on each to remove -->
+      </header>
+      <div class="notes">{{ notes }}</div>
+    </main>
+    <script>
+      const filterNotes = (notes, filters) => {
+        if (filters.length === 0) return notes;
+        return notes.filter((note) => {
+          const tags = Array.from(note.children[1].children).map(
+            (btn) => btn.value
+          );
+          for (filter of filters) {
+            if (!tags.includes(filter)) return false;
+          }
+          return true;
+        });
+      };
+
+      const allTags = document.querySelectorAll(".notes .note .tags button");
+      const filterContainer = document.querySelector("header .tags");
+      const notes = document.querySelectorAll(".notes .note");
+
+      document.addEventListener("click", (e) => {
+        const tagName = e.target.value;
+        let selectedTags = Array.from(
+          document.querySelectorAll("header .tags button")
+        ).map((item) => item.value);
+
+        if (e.target.classList.contains("delete")) {
+          selectedTags = selectedTags.filter((tag) => tag !== e.target.value);
+          e.target.remove();
+        }
+        if (e.target.classList.contains("tag")) {
+          if (!selectedTags.includes(tagName)) {
+            const btn = document.createElement("button");
+            btn.value = btn.textContent = tagName;
+            btn.classList.add(
+              "text-sm",
+              "bg-red-200",
+              "rounded",
+              "py-1",
+              "px-2",
+              "mr-3",
+              "delete"
+            );
+            filterContainer.appendChild(btn);
+            selectedTags.push(tagName);
+          }
+        }
+        if (
+          e.target.classList.contains("delete") ||
+          e.target.classList.contains("tag")
+        ) {
+          document
+            .querySelector(".notes")
+            .replaceChildren(...filterNotes(Array.from(notes), selectedTags));
+        }
+      });
+    </script>
   </body>
 </html>

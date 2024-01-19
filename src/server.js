@@ -13,11 +13,14 @@ const formatNotes = (notes) => {
     .map((note) => {
       return `
         <div class="note my-3">
-          <p class="text-xl">${note.content}</p>
+          <p class="text-2xl">${note.content}</p>
           <div class="tags">
-            ${note.tags.map(
-              (tag) => `<button class="tag text-sm">${tag}</button>`
-            )}
+            ${note.tags
+              .map(
+                (tag) =>
+                  `<button class="text-sm bg-slate-200 rounded py-1 px-2 mr-3 tag" value="${tag}">${tag}</button>`
+              )
+              .join("")}
           </div>
         </div>
       `;
