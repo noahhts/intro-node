@@ -2,6 +2,8 @@ CLI note-taking app with a simple website from the [Introduction to Node.js, v3]
 
 You can see the course notes/slides [on Notion](https://scottmoss.notion.site/scottmoss/Intro-to-Node-js-V3-7c8e4ccaebf94b839f425fff13dcc44c) and the code [on GitHub](https://github.com/Hendrixer/intro-node-v3).
 
+I learned how to perform CRUD apps on a file by using internal Node modules like fs. Interacting and installing things from npm, such as yargs, jest, and open. Learned a bit about testing. Learned to build a web server to send back server-side HTML interpolated with data from a database/file using http module.
+
 I've added to the original app in the following ways:
 
 - added a tag command (for the CLI) to filter notes by tag
